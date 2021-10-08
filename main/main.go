@@ -21,12 +21,36 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 // Обработчик для отображения содержимого заметки.
 func showSnippet(w http.ResponseWriter, r *http.Request) {
+	// Используем r.Method для проверки, использует ли запрос метод GET или нет. Обратите внимание,
+	if r.Method != http.MethodGet{
+		// Если это не так, то вызывается метод w.WriteHeader() для возвращения статус-кода 405
+		// и вызывается метод w.Write() для возвращения тела-ответа с текстом "Метод запрещен".
+		// Затем мы завершаем работу функции вызвав "return", чтобы
+		// последующий код не выполнялся.
+		w.WriteHeader(405)
+		w.Write([]byte("POST-Метод запрещен!"))
+		log.Println("Post в Get запросе")
+		return
+	}
 	w.Write([]byte("Отображение заметки..."))
 }
 
 // Обработчик для создания новой заметки.
 func createSnippet(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Форма для создания новой заметки..."))
+	// Используем r.Method для проверки, использует ли запрос метод POST или нет. Обратите внимание,
+	// что http.MethodPost является строкой и содержит текст "POST".
+	if r.Method != http.MethodPost {
+		// Если это не так, то вызывается метод w.WriteHeader() для возвращения статус-кода 405
+		// и вызывается метод w.Write() для возвращения тела-ответа с текстом "Метод запрещен".
+		// Затем мы завершаем работу функции вызвав "return", чтобы
+		// последующий код не выполнялся.
+		w.Header().Set("Allow", http.MethodPost)
+		w.WriteHeader(405)
+		w.Write([]byte("GET-Метод запрещен!"))
+		log.Println("Get в Post запросе")
+		return
+	}
+	w.Write([]byte("Создание новой заметки..."))
 }
 
 func main() {

@@ -27,6 +27,7 @@ func showSnippet(w http.ResponseWriter, r *http.Request) {
 		// и вызывается метод w.Write() для возвращения тела-ответа с текстом "Метод запрещен".
 		// Затем мы завершаем работу функции вызвав "return", чтобы
 		// последующий код не выполнялся.
+		w.Header().Set("Allow", http.MethodGet)
 		w.WriteHeader(405)
 		w.Write([]byte("POST-Метод запрещен!"))
 		log.Println("Post в Get запросе")

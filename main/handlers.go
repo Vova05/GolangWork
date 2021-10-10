@@ -92,3 +92,26 @@ func createSnippet(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Создание новой заметки..."))
 }
 
+func LogIn(w http.ResponseWriter, r *http.Request){
+
+	files := []string{
+		"GolangWork/ui/html/login.page.tmpl.xhtml",
+		"GolangWork/ui/html/base_login.layout.tmpl.xhtml",
+		"GolangWork/ui/html/footer.partial.tmpl.xhtml",
+	}
+
+	ts, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+
+	err = ts.Execute(w, nil)
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, "Internal Server Error", 500)
+	}
+
+}
+

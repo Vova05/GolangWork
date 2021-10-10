@@ -14,7 +14,7 @@ func main() {
 	mux.HandleFunc("/", home)
 	mux.HandleFunc("/snippet", showSnippet)
 	mux.HandleFunc("/snippet/create", createSnippet)
-
+	mux.HandleFunc("/LogIn",LogIn)
 	// Инициализируем FileServer, он будет обрабатывать
 	// HTTP-запросы к статическим файлам из папки "./ui/static".
 	// Обратите внимание, что переданный в функцию http.Dir путь
